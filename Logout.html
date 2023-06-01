@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>BFFT Logout</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="index.html">BFFT</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+<div class="container">
+    <h1>You have successfully logged out! Thank you:)</h1>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+    var firebaseEmailAuth; //파이어베이스 email 인증 모듈 전역변수
+
+    //파이어 베이스 초기화 코드
+    var config = {
+        apiKey: "AIzaSyAAo0OHZ_XoaVWMOxCYnlcUFNfrSog6y9E",
+        authDomain: "cs473-bfft-41b34.firebaseapp.com",
+        databaseURL: "https://cs473-bfft-41b34.firebaseio.com",
+        projectId: "cs473-bfft-41b34",
+        storageBucket: "cs473-bfft-41b34.appspot.com",
+        messagingSenderId: "206308782896",
+        appId: "1:206308782896:web:cc7d9e705aa01704bf0ef5",
+        measurementId: "G-5M46FYM7KN"
+    };
+    //파이어베이스 초기화
+    firebase.initializeApp(config);
+    //인증모듈 객체 가져오기
+    firebaseEmailAuth = firebase.auth();
+
+    firebase.auth().signOut().then(function() {
+        alert("successfully logged out!!");
+        window.location.href = "index.html"
+    }).catch(function(error) {
+        alert("log out failure");
+    });
+
+
+</script>
+</body>
+</html>

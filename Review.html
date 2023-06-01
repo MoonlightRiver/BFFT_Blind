@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-database.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>BFFT Login-Page</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+    <link href="css/star-rating.css" media="all" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/time.js"></script>
+
+
+
+</head>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="ViewPost.html">BFFT</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="location.href='index.html'">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+    var firebaseEmailAuth; //파이어베이스 email 인증 모듈 전역변수
+    var firebaseDatabase; //파이어베이스 db 모듈 전역변수
+    var name; //유저 이름
+    var loginUserKey; //로그인한 유저의 부모 key
+    var userInfo; //로그인한 유저의 정보 object type
+
+    //파이어 베이스 초기화 코드
+    var config = {
+        apiKey: "AIzaSyAAo0OHZ_XoaVWMOxCYnlcUFNfrSog6y9E",
+        authDomain: "cs473-bfft-41b34.firebaseapp.com",
+        databaseURL: "https://cs473-bfft-41b34.firebaseio.com",
+        projectId: "cs473-bfft-41b34",
+        storageBucket: "cs473-bfft-41b34.appspot.com",
+        messagingSenderId: "206308782896",
+        appId: "1:206308782896:web:cc7d9e705aa01704bf0ef5",
+        measurementId: "G-5M46FYM7KN"
+    };
+    firebase.initializeApp(config);
+    //인증모듈 객체 가져오기
+    firebaseEmailAuth = firebase.auth();
+    //데이터베이스 모듈객체 가져오기
+    firebaseDatabase = firebase.database();
+
+    //세션 체크 함수
+
+</script>
+<div class="p-5 m-5">
+    <div class="container">
+        <h1 class="text-center font-weight-bold"> RATE YOUR<br />MEAL-MATES!<br /> &nbsp; </h1>
+    </div>
+
+    <div class ="row">
+        <div class="container">
+            <body>
+            <ul class="list-group">
+                <li class="list-group-item flex-column justify-content-between align-items-md-start">
+                    <h2>&nbsp;&nbsp;&nbsp;<label for="input-1" class="control-label" id = "title1">Empty slot</label></h2>
+                    <input id="input-1" name="input-0" class="rating rating-loading" data-min="0" data-max="5" data-step="1" data-show-clear="false" data-size="xl">
+                    <div class="form-group">
+                        <h3>&nbsp;&nbsp;<label for="input-comment" id="comment-1">Empty slot</label></h3>
+                        <input type="comment" class="form-control" id="input-comment"aria-describedby="comment-help" placeholder="type anything if you want" size="lg">
+                        <small id="comment-help" class="form-text text-muted">The comments will help the rating and not be revealed.</small>
+                    </div>
+                </li>
+                <li class="list-group-item flex-column justify-content-between align-items-center">
+                    <h2>&nbsp;&nbsp;&nbsp;<label for="input-2" class="control-label" id = "title2">Empty slot</label></h2>
+                    <input id="input-2" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="1" data-show-clear="false" data-size="xl">
+                    <div class="form-group">
+                        <h3>&nbsp;&nbsp;<label for="input-comment2" id="comment-2">Empty slot</label></h3>
+                        <input type="comment" class="form-control" id="input-comment2" placeholder="type anything if you want" size="lg">
+                    </div>
+                </li>
+
+                <li class="list-group-item flex-column justify-content-between align-items-center">
+                    <h2>&nbsp;&nbsp;&nbsp;<label for="input-3" class="control-label" id="title3">Empty slot</label></h2>
+                    <input id="input-3" name="input-3" class="rating rating-loading" data-min="0" data-max="5" data-step="1" data-show-clear="false" data-size="xl">
+                    <div class="form-group">
+                        <h3>&nbsp;&nbsp;<label for="input-comment3" id = "comment-3">Empty slot</label></h3>
+                        <input type="comment" class="form-control" id="input-comment3" placeholder="type anything if you want" size="lg">
+                    </div>
+                </li>
+            </ul>
+
+            <button type="button" class="btn btn-primary btn-lg btn-block " id="but" onclick="alert('Thank you for leaving reviews!.');" >Add reviews</button>
+            </body>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
+<script src="js/star-rating.js" type="text/javascript"></script>
+
+<script src="js/review.js"></script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-database.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <title>ChatRoom Page</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/chat_normalize.css">
+    <link rel="stylesheet" href="css/chat_style.css">
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.min.css'>
+</head>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="ViewPost.html">BFFT</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <button class="btn btn-secondary my-2 my-sm-0 mr-1" type="button" onclick="location.href='Review.html'">Exit Room</button>
+            <button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="location.href='index.html'">Logout</button>
+        </form>
+    </div>
+</nav>
+<body class="text-center">
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyAAo0OHZ_XoaVWMOxCYnlcUFNfrSog6y9E",
+        authDomain: "cs473-bfft-41b34.firebaseapp.com",
+        databaseURL: "https://cs473-bfft-41b34.firebaseio.com",
+        projectId: "cs473-bfft-41b34",
+        storageBucket: "cs473-bfft-41b34.appspot.com",
+        messagingSenderId: "206308782896",
+        appId: "1:206308782896:web:cc7d9e705aa01704bf0ef5",
+        measurementId: "G-5M46FYM7KN"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    var post_key_value = localStorage.getItem("post_key");
+
+    firebase.database().ref("Posts/"+post_key_value+"/messages").on("child_removed", function (snapshot) {
+        document.getElementById("message-" + snapshot.key).innerHTML = "This message has been deleted";
+    });
+
+    function deleteMessage(self) {
+        var messageId = self.getAttribute("data-id");
+        firebase.database().ref("Posts/"+post_key_value+"/messages").child(messageId).remove();
+        var element = document. getElementById("message-"+messageId);
+        element.parentNode.parentNode.removeChild(element.parentNode);
+    }
+
+    function sendMessage() {
+        var message = document.getElementById("message").value;
+        firebase.database().ref("Posts/"+post_key_value+"/messages").push().set({
+            "message": message,
+            "sender": myName
+        });
+        return false;
+    }
+</script>
+<div>
+    <div class="p-5 m-5" style="margin-top:50%; left:10%; width:30%; z-index:2; font-size:1.5rem;">
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong id="member-list">Members</strong>
+                <strong><span>Ranks</span></strong>
+            </li>
+            <div id = "member_rank">
+            </div>
+        </ul>
+    </div>
+
+    <div class="p-5 m-5" style="margin-top:50%; left:10%; width:30%; z-index:2; font-size:1.5rem;">
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>Recommended Menus</strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                뿌링클
+                <span class="badge badge-primary badge-pill">15,000 won</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                맛초킹
+                <span class="badge badge-primary badge-pill">12,000 won</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                치즈볼 (4pics)
+                <span class="badge badge-primary badge-pill">13,000 won</span>
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="chat">
+        <div class="chat-title">
+            <h1 id = "title">Anyone to enjoy pizza together?</h1>
+            <h2 id = "restaurant">[Domino Pizza]</h2>
+            <figure class="avatar">
+                <img src="./assets/chat_room.png" /></figure>
+            </div>
+            <div class="messages">
+                <div class="messages-content"></div>
+            </div>
+            <div class="message-box">
+                <textarea type="text" class="message-input" id="message" placeholder="Type message..." style="width:80%;"></textarea>
+                <button type="submit" class="message-submit">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script>
+    var firebaseEmailAuth; //파이어베이스 email 인증 모듈 전역변수
+    var firebaseDatabase; //파이어베이스 db 모듈 전역변수
+    var name; //유저 이름
+    var loginUserKey; //로그인한 유저의 부모 key
+    var userInfo; //로그인한 유저의 정보 object type
+
+    //파이어 베이스 초기화 코드
+    var config = {
+        apiKey: "AIzaSyAAo0OHZ_XoaVWMOxCYnlcUFNfrSog6y9E",
+        authDomain: "cs473-bfft-41b34.firebaseapp.com",
+        databaseURL: "https://cs473-bfft-41b34.firebaseio.com",
+        projectId: "cs473-bfft-41b34",
+        storageBucket: "cs473-bfft-41b34.appspot.com",
+        messagingSenderId: "206308782896",
+        appId: "1:206308782896:web:cc7d9e705aa01704bf0ef5",
+        measurementId: "G-5M46FYM7KN"
+    };
+    firebase.initializeApp(config);
+    //인증모듈 객체 가져오기
+    firebaseEmailAuth = firebase.auth();
+    //데이터베이스 모듈객체 가져오기
+    firebaseDatabase = firebase.database();
+
+    //세션 체크 함수
+    userSessionCheck();
+
+
+    //유저가 로그인 했는지 안했는지 확인해주는 함수
+    function userSessionCheck() {
+
+        //로그인이 되어있으면 - 유저가 있으면, user를 인자값으로 넘겨준다.
+        firebaseEmailAuth.onAuthStateChanged(function (user) {
+
+            if (user) {
+                //조회 - 데이터 베이스에 저장된 닉네임을 현재 접속되어 있는 user의 pk key 값을 이용해서 가져오기
+                firebaseDatabase.ref("users/" + user.uid).once('value').then(function (snapshot) {
+                    //자바스크립트 dom 선택자를 통해서 네비게이션 메뉴의 엘리먼트 변경해주기
+                    document.getElementById("loginmenu").textContent = "logout";
+                    document.getElementById("loginmenu").href = "Logout.html";
+                    document.getElementById("joinmenu").textContent = "Welcome! " + snapshot.val().nickname;
+                    document.getElementById("joinmenu").href = "#";
+
+                    name = snapshot.val().name;   //유저 닉네임은 계속 쓸거기 때문에 전역변수로 할당
+                    loginUserKey = snapshot.key;  //로그인한 유저의 key도 계속 쓸 것이기 때문에 전역변수로 할당
+                    userInfo = snapshot.val(); //snapshot.val()에 user 테이블에 있는 해당 개체 정보가 넘어온다. userInfo에 대입!
+
+                    //alert(userInfo.userid);  //uid는 db에서 user 테이블의 각 개체들의 pk 인데, 이 값은 인증에서 생성된 아이디의 pk 값과 같다. *중요!
+
+                    return true
+                });
+
+            } else {
+                return false
+            }
+        });
+    }
+
+</script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
+<script src="js/chat.js?v=<?= time(); ?>"></script>
+</body>
+</html>
